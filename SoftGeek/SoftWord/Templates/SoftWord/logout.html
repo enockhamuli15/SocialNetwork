@@ -1,0 +1,23 @@
+{% extends "base_logins.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="logout">
+    <div class="col3" >
+                <div class="col2">
+
+       <div class="form-group" style="margin-left:70px;">
+           <br>
+                <p >You have disconnected from your session</p>
+
+       </div>
+                         </div>
+            </div>
+
+             <div class="col3" style="margin-top:0px;margin-left:5px;">
+                <div class="col2">
+                    <a href="{% url 'login_page' %}" style="color:blue;margin-left: 80px;margin-bottom:80px;">Log in?</a>
+                      </div> <br>
+            </div>
+</div>
+{% endblock content %}

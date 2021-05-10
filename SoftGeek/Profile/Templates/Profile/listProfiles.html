@@ -1,0 +1,63 @@
+{% extends 'base_apps.html' %}
+
+{% block title %}
+    All profiles
+{% endblock title %}
+
+{% block content %}
+
+    {% if is_empty %}
+        <div>No profiles to deal with</div>
+    {% endif %}
+
+    
+        <div class="ui segment">
+           <div class="ui grid text-center">
+                <br>
+                <a href="{%url 'my_invites' %}">
+                    <button class="btn btn-outline-primary">View my Network</button>
+                </a>
+                {% for itm in query %}
+                    <div class="row">
+                        <div class="three wide column" >
+                            <img class=" rounded-circle article-img" src="{{ itm.profile_photo.url }}" alt="" >
+                        </div>
+                        <div class="thirteen wide column">
+                            <h6>{{itm.user}}</h6>
+                            <h6>{{itm.description}}</h6>
+                            <a href="{{itm.get_absolute_url}}">
+                                <button class="btn btn-primary view-profile " style="margin-bottom: 5px;">View profile</button>
+                            </a>
+                            <br>
+                            {% if itm.user not in rel_receiver and itm.user not in rel_sender %}
+                                <form action="{% url 'send_invitation' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="profile_pk" value="{{itm.pk}}">
+                                    
+                                        <button type="submit" class="btn btn-outline-success view-profile"><i class="plus square icon"></i>Add</button>
+                                </form>
+                            {% endif %}
+
+                            {% if itm.user in rel_receiver and request.user not in itm.friends.all %}
+                                <button class="btn btn-outline-secondary view-profile"><i class="user icon"></i>Waiting...</button>
+                            {% endif %}
+
+                            {% if request.user in itm.friends.all %}
+                                <form action="{% url 'remove_friends' %}" method="POST">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="profile_pk" value="{{itm.pk}}">
+                                    
+                                        <button type="submit" class="btn btn-outline-danger view-profile"><i class="minus square icon"></i>Remove</button>
+                                </form>
+                            {% endif %}  
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}     
+           </div> 
+        </div>
+        
+    
+
+{% endblock content %}

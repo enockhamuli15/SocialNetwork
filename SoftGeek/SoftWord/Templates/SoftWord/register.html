@@ -1,0 +1,66 @@
+{% extends "base_logins.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<div class="form-group" style=" color: maroon;margin-top: 50px;margin-bottom: 30px;margin-left: 650px;font-size: 25px;font-weight:bold;">
+    <p >SoftGeeks</p>
+
+</div>
+<form action="" method="POST" autocomplete="off" style="margin-left:450px;background-color:white;width:500px;border-radius:15px;margin-bottom:40px;">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row" >
+    <div class="col3" style="margin-top:25px;">
+            <div class="col2">
+    <div class="form-group" style="margin-left:80px; font-size:20px; font-weight:bold;">
+            <p >Create an account</p>
+        </div>
+                 </div>
+                </div>
+
+         <div class="col3" style="margin-top:15px;">
+            <div class="col2">
+     <div class="form-group">
+
+    <img src="{% static 'images/defaultUser.png' %}">
+       </div>
+         </div>
+                </div>
+            </div>
+
+    <div class="row" style="font-size:14px;">
+
+      <div class="form-group" style="margin-left: 60px;">
+            {{ form|crispy }}
+        </div>
+
+    </div>
+    <button type="submit" class="btn btn-success" style="margin-left: 80px;width:300px;margin-top:20px;font-weight:bold;border-radius:30px;">Submit</button>
+        <div class="col3"  > <div class="col2"> <hr style="width:480px;"> </div> </div>
+    <div class="row" style="margin-left:120px;margin-top: 10px;font-size:14px;">
+        <div class="col3">
+             <div class="col2">
+                  <div class="form-group" >
+           <p> Already have an account?</p>
+                 </div>
+                  </div>
+        </div>
+         <div class="col3">
+            <div class="col2">
+                 <div class="form-group" >
+                <a href="{% url 'login_page' %}" style="margin-left:20px;color:blue;font-weight:bold;">Sign in</a>
+                     </div>
+            </div>
+           </div>
+            </div>
+
+    </div>
+</form>
+<!--
+{% if messages %}
+    {% for message in messages %}
+        <p class="alert alert-{{ message.tags }}" style="margin-left:500px;width:400px;border-radius:15px;">{{ message }}</p>
+    {% endfor %}
+{% endif %}-->
+{% endblock content %}

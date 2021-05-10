@@ -1,0 +1,20 @@
+{% extends 'base_apps.html' %}
+
+{% block title %}
+    Invite network
+{% endblock title %}
+
+{% block content %}
+<div class="container text-center">
+    <br>
+    Grow your Network
+    <br>
+</div>
+    <ul> 
+        {% for item in query %}
+        <li>
+            {{ item }}
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

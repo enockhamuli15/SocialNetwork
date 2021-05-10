@@ -1,0 +1,62 @@
+{% extends "base_logins.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="form-group" style=" color: maroon;margin-top: 50px;margin-bottom: 30px;margin-left: 650px;font-size: 25px;font-weight:bold;">
+    <p >SoftGeeks</p>
+
+</div>
+<form method="POST" class="form-group" >
+        {% csrf_token %}
+    <div class="row" style="margin-left:500px;background-color:white;width:400px;border-radius:15px;">
+        <div class="form-group" style="margin-top:10px;">
+            <p style="margin-left:150px; font-size:20px; font-weight:bold;text-align:center;">Sign in</p>
+        </div>
+
+
+        <div class="form-group" style="margin-top: 5px;margin-left:60px;width:300px;font-size:14px;">
+            {{form|crispy}}
+
+        </div>
+
+
+        <div class="row" style="font-size:14px;margin-top:10px;">
+            <div class="col3">
+                <div class="col2">
+       <div class="form-group" >
+
+                <button type="submit" class="btn btn-primary" style="margin-top:10px;margin-left: 70px;width:100px;border-radius:20px;padding:3px;">Connect</button>
+
+        </div>
+        </div>
+            </div>
+
+            <div class="col3" style="margin-top:15px;">
+                <div class="col2" >
+                    <a href="{% url 'password_reset' %}" style="color:blue;margin-left:30px;">Forgot your password?</a>
+
+                    </div>
+            </div>
+
+            <div class="col3" style="margin-left:15px;" > <div class="col2"> <hr style="width:400px;"> </div> </div>
+
+             <div class="col3" >
+                <div class="col2">
+
+       <div class="form-group" style="margin-left:70px;">
+                <p>New to SoftGeeks?</p>
+
+       </div>
+                         </div>
+            </div>
+
+             <div class="col3" style="margin-top:0px;margin-left:5px;">
+                <div class="col2">
+                    <a href="{% url 'register' %}" style="color:blue;">Create an Account</a>
+                                 </div>
+            </div>
+</div>
+    </div>
+</form>
+
+{% endblock content %}

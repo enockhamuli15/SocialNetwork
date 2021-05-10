@@ -1,0 +1,49 @@
+{% extends 'base_apps.html' %}
+
+{% block title %}
+    My invites
+{% endblock title %}
+
+{% block content %}
+<div class="container text-center">
+    <br>
+    Friend requests
+    <br>
+</div>
+
+{% if is_empty %}
+    <h3 class="ui">No invitations here!!!</h3>
+{% endif %}
+
+{% for itm in query %}
+    <div class="ui segment">
+        <div class="ui grid">
+            <div class="row">
+                <div class="three wide column">
+                    <img class="rounded-circle article-img" src="{{ itm.profile_photo.url }}" alt="">
+                </div>
+                <div class="thirteen wide column">
+                    <h5>{{itm.user}}</h5>
+                    <p>{{itm.description}}</p>
+                    <a href="">
+                        <button class="btn btn-outline-primary">View Profile</button>
+                    </a>
+                    <form action="{% url 'accept_invites' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="profile_pk" value="{{itm.pk}}">
+                        <button class="btn btn-outline-success" type="submit">Accept</button>
+                    </form>
+
+                    <form action="{% url 'reject_invites' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="profile_pk" value="{{itm.pk}}">
+                        <button class="btn btn-outline-danger" type="submit">Reject</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock content %}

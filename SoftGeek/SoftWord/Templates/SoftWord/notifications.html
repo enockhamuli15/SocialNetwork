@@ -1,0 +1,67 @@
+{% extends "base_apps.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Notifications{% endblock title %}
+{% block content %}
+<style>
+
+.notific
+{
+	
+	background-color: #efefef;
+    
+}
+
+.notific .row
+{
+    margin-left: 350px;
+	border-radius: 5px;
+	width: 600px;
+    background-color: #c5e4f1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.notific .rounded-circle
+{
+	height: 60px;
+	width : 60px;
+	margin-top: 5px;
+	margin-left: 15px;
+	margin-right: 5px;
+	border-radius : 100%;
+}
+</style>
+<div class="notific">
+    <br/>
+   <div class="row" style="margin-bottom: 10px;">
+        <div class="col3">
+            <div class="col2">
+                <img class="rounded-circle article-img" src="{% static 'images/logo.png' %}" alt="">
+            </div>
+        </div>
+        <div class="col3">
+            Description of the notification
+        </div>
+        <div class="col3" style="margin-left:50px;">
+            5:45pm
+        </div>
+   </div>
+
+   <div class="row" >
+        <div class="col3">
+            <div class="col2">
+                <img class="rounded-circle article-img" src="{% static 'images/logo.png' %}" alt="">
+            </div>
+        </div>
+        <div class="col3">
+            Description of the notification
+        </div>
+        <div class="col3" style="margin-left:50px;">
+            5:45pm
+        </div>
+    </div>
+    <br/>
+</div>
+{% endblock content %}

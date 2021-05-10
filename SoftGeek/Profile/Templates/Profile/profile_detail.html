@@ -1,0 +1,214 @@
+{% extends "base_apps.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Profile{% endblock title %}
+{% block content %}
+<div class="modal fade" id="allposts2" tabindex="-1" style="margin-left:350px;border-radius:15px;width:500px;" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<form  method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel" style="font-weight:bold;">Create a post</h5>
+				<a type="button" class="close" data-dismiss="modal" aria-label="Close" href="{% url 'profile' %}">
+					<span aria-hidden="true">&times;</span>
+				</a>
+			</div>
+			<div class="modal-body">
+					<!--POSTS-->
+
+					<div class="col2">
+						<div class="input-group" style="margin-left: 50px;">
+						<a class="user-profile" href=""><img class="images" src="{{ profile.profile_photo.url }}"></a>
+						<p style="margin-top: 35px;font-weight: bold;">{{user.first_name}} {{user.last_name}}</p>
+						</div>
+					</div>
+					<div class="col-sm-10" style="margin-left: 50px; font-size: small;">
+
+						<div>
+							<br>
+							{{ post_form|crispy }}
+
+							</div>
+					</div>
+
+
+
+			</div>
+			<div class="modal-footer">
+					
+					<button type="submit" class="btn btn-primary" style="padding: 3px;">Post</button>
+			</div>
+		</form>
+		</div>
+
+	</div>
+</div>
+
+
+	<div class="modal fade" id="allposts" tabindex="-1" style="margin-left:300px;border-radius:30px;width:auto;" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<form action="" method="POST" enctype="multipart/form-data" >
+					{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel" style="font-weight:bold;">Edit profile</h5>
+					<a type="button" href="{% url 'profile' %}"  class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</a>
+				</div>
+				<div class="modal-body">
+						<!--POSTS-->
+
+						<div class="col2">
+							<div class="input-group" style="margin-left: 50px;">
+							<a class="user-profile" href=""><img class="images" src="{{ profile.profile_photo.url }}"></a>
+							<p>{{user.first_name}} {{user.last_name}}</p>
+							</div>
+						</div>
+						<div class="col-sm-10" style="margin-left: 50px; font-size: small;">
+							<div class="text-left">
+								<br>
+								<div class="row">
+									<div class="col3">
+										<div class="col2">
+											{{ u_form|crispy }}
+                                          
+										</div>
+									</div>
+									<div class="col3 " style="margin-top: -330px; margin-left: 350px;">
+										<div class="col2">
+											{{ p_form|crispy }}
+										</div>
+									</div>
+								</div>
+								
+								
+								
+							</div>
+
+						</div>
+
+
+
+				</div>
+				<div class="modal-footer">
+						<button type="submit" class="btn btn-primary" style="padding: 3px;">Save</button>
+				</div>
+			</form>
+			</div>
+
+		</div>
+	</div>
+ 
+
+
+<section class="profile">
+    <div class="profile_body">
+        <div class="heading" >
+			<div class="row">
+					<a href="http://127.0.0.1:8000{{ profile.profile_photo.url }}">
+					<img  class="rounded-circle account-img" src="{{ profile.profile_photo.url }}">
+					</a>
+
+					<div class="content">
+						<p class="ids"> {{user.first_name}} {{user.last_name}}</p>
+						
+						<p class="ids" style="font-size:14px;">{{ profile.description }}</p>
+
+						<div class="bio">
+						
+							<button class="btn btn-outline-primary" type="submit" onclick="make()" style="border-radius:10px;padding:4px;">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+								<path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+								</svg>
+								Edit profile
+							</button>
+						</div>
+					</div>
+			</div>
+        </div>
+
+        <div class="dashboard">
+
+		<h1>Dashboard</h1>
+		<div class="container">
+			<div class="row">
+
+
+				<div class="col-md-3">
+					<div class="feature-box">
+
+						<div class="feature-details" >
+							<a href="#">Posts</a>
+								<p >You've already made <h2 >0</h2> posts
+								</p>
+								<div>
+									<span><a type="button" onclick="make2()" style="color:#2d557d;margin-right: 5px;">Start a new post</a></span>
+									<span><a href="" style="color:#2d557d;">Manage my posts</a></span>
+
+									</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="feature-box">
+
+						<div class="feature-details">
+							<a href="#">Network</a>
+								<p>You're connected with <h2>{{profile.get_friends_no}}</h2> geeks</p>
+								<div>
+									<span><a href="{%url 'all_profiles' %}" style="color:#2d557d;margin-right: 5px;">View all profiles</a></span>
+									<span><a href="{%url 'my_invites' %}" style="color:#2d557d;">Invitations received</a></span>
+								</div>
+						</div>
+					</div>
+				</div>
+                <div class="col-md-3">
+					<div class="feature-box">
+
+						<div class="feature-details">
+							<a href="#">Likes received</a>
+								<p>You've already received <h2>0</h2> likes</p>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="feature-box">
+
+						<div class="feature-details" >
+							<a href="{% url 'Alldomains' %}">Domains</a>
+								<p>You're registered to <h2>41</h2> branches</p>
+
+						</div>
+					</div>
+				</div>
+			</div>
+            <br>
+		</div>
+
+
+        </div>
+        <div class="profilePosts">
+			<div class="myPosts">
+				<h4>My posts and related</h4>
+					{% if len_posts %}
+						{% for post in posts %}
+							<div class="ui segment">
+								{{post.description}}
+							</div>
+
+						{% endfor %}
+					{% else %}
+							<div class="messages">No posts for this user</div>
+							<br>
+					{% endif %}
+			</div> 
+		</div>
+    </div>
+</section>
+
+{% endblock content %}
