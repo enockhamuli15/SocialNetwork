@@ -29,12 +29,14 @@
                                 <button class="btn btn-primary view-profile " style="margin-bottom: 5px;">View profile</button>
                             </a>
                             <br>
+
+
                             {% if itm.user not in rel_receiver and itm.user not in rel_sender %}
-                                <form action="{% url 'send_invitation' %}" method="POST">
+                                <form action="{% url 'send_invits' %}" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="profile_pk" value="{{itm.pk}}">
                                     
-                                        <button type="submit" class="btn btn-outline-success view-profile"><i class="plus square icon"></i>Add</button>
+                                    <button type="submit" class="btn btn-outline-success view-profile">Add</button>
                                 </form>
                             {% endif %}
 
@@ -51,6 +53,8 @@
                                         <button type="submit" class="btn btn-outline-danger view-profile"><i class="minus square icon"></i>Remove</button>
                                 </form>
                             {% endif %}  
+
+                            
                         </div>
                     </div>
                     <hr>

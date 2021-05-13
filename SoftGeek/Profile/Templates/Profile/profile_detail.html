@@ -142,7 +142,7 @@
 
 						<div class="feature-details" >
 							<a href="#">Posts</a>
-								<p >You've already made <h2 >0</h2> posts
+								<p >You've already made <h2 >{{profile.get_posts_no}}</h2> posts
 								</p>
 								<div>
 									<span><a type="button" onclick="make2()" style="color:#2d557d;margin-right: 5px;">Start a new post</a></span>
@@ -170,7 +170,7 @@
 
 						<div class="feature-details">
 							<a href="#">Likes received</a>
-								<p>You've already received <h2>0</h2> likes</p>
+								<p>You've already received <h2>{{profile.get_likes_recieved_no}}</h2> likes</p>
 
 						</div>
 					</div>
@@ -181,7 +181,7 @@
 
 						<div class="feature-details" >
 							<a href="{% url 'Alldomains' %}">Domains</a>
-								<p>You're registered to <h2>41</h2> branches</p>
+								<p>You're registered to <h2>...</h2> branches</p>
 
 						</div>
 					</div>

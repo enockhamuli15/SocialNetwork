@@ -6,8 +6,8 @@ from .models import Profile, Relationship
 @receiver(post_save, sender='SoftWord.Logins')
 def auto_create_profile(sender, instance, created, **kwargs):
     if created:
-        profile = Profile.objects.create(user=instance)
-        profile.save()
+        Profile.objects.create(user=instance)
+
 
 @receiver(post_save, sender=Relationship)
 def post_save_add_to_friends(sender, instance, created, **kwargs):

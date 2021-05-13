@@ -20,7 +20,7 @@
                             <h6>{{object.description}}</h6>
 
                             {% if object.user not in rel_receiver and object.user not in rel_sender %}
-                                <form action="{% url 'send_invitation' %}" method="POST">
+                                <form action="{% url 'send_invits' %}" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="profile_pk" value="{{object.pk}}">
                                     
@@ -44,11 +44,11 @@
                             <div class="ui vertical fluid menu">
                                 <div class="item">
                                     Posts 
-                                    <div class="ui label"></div>
+                                    <div class="ui label">{{object.get_posts_no}}</div>
                                 </div>
                                 <div class="item">
                                     Likes 
-                                    <div class="ui label"></div>
+                                    <div class="ui label">{{object.get_likes_recieved_no}}</div>
                                 </div>
                                 <div class="item">
                                     Friends 
@@ -60,7 +60,9 @@
                                 {% if len_posts %}
                                     {% for post in posts %}
                                         <div class="ui segment">
-                                            {{post.description}}
+                                            {{post.description}} <br>
+                                            {{post.createdTime}} <br>
+                                            {{post.createdTime|timesince}} ago
                                         </div>
                     
                                     {% endfor %}

@@ -2,8 +2,6 @@ from django.db import models
 from django.conf import settings
 from PIL import Image
 from django.shortcuts import reverse
-from django.dispatch import receiver
-from django.db.models.signals import post_save
 from django.db.models import Q
 from django.template.defaultfilters import slugify
 # Create your models here.
@@ -58,7 +56,7 @@ class Profile(models.Model):
 
     def get_friends_no(self):
         return self.friends.all().count()
-    """
+    
     def get_likes_given_no(self):
         likes = self.like_set.all()
         total_liked = 0
@@ -68,18 +66,18 @@ class Profile(models.Model):
         return total_liked
 
     def get_likes_recieved_no(self):
-        posts = self.posts.all()
+        posts = self.author_info.all()
         total_liked = 0
         for item in posts:
-            total_liked += item.liked.all().count()
+            total_liked += item.likes.all().count()
         return total_liked
 
     def get_posts_no(self):
-        return self.posts.all().count()
+        return self.author_info.all().count()
 
     def get_all_authors_posts(self):
-        return self.posts.all()
-    """
+        return self.author_info.all()
+    
     __initial_first_name = None
     __initial_last_name = None
 
@@ -109,8 +107,9 @@ class Profile(models.Model):
             output_size = (300,300)
             img.thumbnail(output_size)
             img.save(self.profile_photo.path)
-        super().save()
+
         super().save(*args, **kwargs)
+
 
 STATUS_CHOICES = (
     ('send', 'send'),
@@ -119,15 +118,15 @@ STATUS_CHOICES = (
 
 class RelationshipManager(models.Manager):
     def invitations_received(self, receiver):
-        qs = Relationship.objects.filter(receiver=receiver, status='send')
-        return qs
+        query = Relationship.objects.filter(receiver=receiver, status='send')
+        return query
 
 class Relationship(models.Model):
     receiver = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='receiver')
     sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='sender')
     status = models.CharField(max_length=8, choices=STATUS_CHOICES)
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True, auto_created=True)
+    created = models.DateTimeField(auto_now_add=True, auto_created=True)
 
     objects = RelationshipManager()
 

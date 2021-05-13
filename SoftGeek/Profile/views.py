@@ -40,6 +40,8 @@ def profile(request):
                 }   
     return render(request, 'profile_detail.html', context)
 
+
+
 @login_required
 def invites_received(request):
     profile = Profile.objects.get(user=request.user)
@@ -56,6 +58,8 @@ def invites_received(request):
     }
     return render(request, 'myInvites.html', context)
     
+
+
 @login_required
 def accept_invitation(request):
     if request.method == 'POST':
@@ -68,6 +72,8 @@ def accept_invitation(request):
             rel.save()
     return redirect('my_invites')
 
+
+
 @login_required
 def reject_invitation(request):
     if request.method == 'POST':
@@ -77,6 +83,8 @@ def reject_invitation(request):
         rel = get_object_or_404(Relationship, sender=sender, receiver=receiver)
         rel.delete()
     return redirect('my_invites')
+
+
 
 @login_required
 def invites_profiles_list(request):
@@ -88,6 +96,8 @@ def invites_profiles_list(request):
     }
     return render(request, 'toInvite_listProfiles.html', context)
 
+
+
 @login_required
 def profiles_list(request):
     user = request.user
@@ -97,6 +107,7 @@ def profiles_list(request):
         'query':query
     }
     return render(request, 'listProfiles.html', context)
+
 
 
 class ProfileDetailView(DetailView):
@@ -124,10 +135,11 @@ class ProfileDetailView(DetailView):
 
         context['rel_receiver'] = rel_receiver
         context['rel_sender'] = rel_sender
-        #context['posts'] = self.get_object().get_all_authors_posts()
-        #context['len_posts'] = True if len(self.get_object().get_all_authors_posts()) > 0 else False
+        context['posts'] = self.get_object().get_all_authors_posts()
+        context['len_posts'] = True if len(self.get_object().get_all_authors_posts()) > 0 else False
         
         return context
+
 
 
 class ProfileListView(ListView):
@@ -161,18 +173,22 @@ class ProfileListView(ListView):
 
         return context
 
+
+
 @login_required
 def send_invitations(request):
     if request.method == 'POST':
         pk = request.POST.get('profile_pk')
-        user =  request.user
+        user = request.user
         sender = Profile.objects.get(user=user)
         receiver = Profile.objects.get(pk=pk)
 
         rel = Relationship.objects.create(sender=sender, receiver=receiver, status='send')
-
+        rel.save()
         return redirect(request.META.get('HTTP_REFERER'))
     return redirect('profile')
+
+
 
 @login_required
 def remove_from_friends(request):
