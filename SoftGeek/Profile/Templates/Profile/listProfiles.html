@@ -15,8 +15,18 @@
            <div class="ui grid text-center">
                 <br>
                 <a href="{%url 'my_invites' %}">
-                    <button class="btn btn-outline-primary">View my Network</button>
+                    <button class="btn btn-outline-primary">View received invitations</button>
                 </a>
+                <a href="{%url 'invites_profiles' %}">
+                    <button class="btn btn-outline-primary">View my network</button>
+                </a>
+                <div class="container text-center">
+                    <br>
+                    Grow your Network
+                    <br>
+                    
+                </div>
+                <br> <br>
                 {% for itm in query %}
                     <div class="row">
                         <div class="three wide column" >

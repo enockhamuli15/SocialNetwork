@@ -16,30 +16,19 @@ from django.urls import reverse_lazy
 
 # Create your views here.
 
-def home1(request):
-    if request.method == 'POST':
-        user = request.user
-        form1 = PostForm(request.POST)
-        
-        if form1.is_valid():
-            form1.save()
-
-    context = {'home_posts': Posts.objects.all(),
-               'form_post': PostForm(),
-               'user': user,
-                'profile': Profile.objects.get(user=request.user)
-               }
-
-    return render(request, 'home.html', context)
-
-
-
 def domains(request):
-    context = {'dom': Domains.objects.all()}
+    context = {
+        'dom': Domains.objects.all(),
+        'profile': Profile.objects.get(user=request.user) 
+        }
     return render(request, 'domains.html', context)
 
 def notifications(request):
-    return render(request, 'notifications.html')
+    context = {
+        'profile': Profile.objects.get(user=request.user) 
+        }
+        
+    return render(request, 'notifications.html', context)
 
 
 
@@ -128,18 +117,29 @@ def post_comment_create_and_list_view(request):
     return redirect('home_page')
 
 
-class PostListView(ListView):
+"""class PostListView(ListView):
     
     model = Posts
     template_name = 'home.html'
     context_object_name = 'home_posts'
+
     extra_context = {
         "form": PostForm(),
         "c_form": CommentModelForm(),
-        
+        #'profile': Profile.objects.get(user=self.request.user)
         }
-    ordering = ['-createdTime']
+    ordering = ['-createdTime']"""
 
+def post_list_view(request):
+
+    context = {
+        'home_posts': Posts.objects.all(),
+        "form": PostForm(),
+        "c_form": CommentModelForm(),
+        'profile': Profile.objects.get(user=request.user)        
+        }
+
+    return render(request, 'home.html', context)
 
 class PostDetailView(LoginRequiredMixin, DetailView):
     model = Posts
@@ -158,17 +158,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = profile
         return super().form_valid(form)
 
-"""class CommentCreateView(LoginRequiredMixin, CreateView):
-    form_class = CommentModelForm
-    model = Comment
-    template_name = 'home.html'
-    context_object_name = 'c_form'
-    extra_context = {'post_id'}
-    success_url = reverse_lazy('home_page')
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)"""
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = PostForm

@@ -321,7 +321,7 @@ button .ui
 {
     margin-left: 20px;
     background-color: #efefef;
-    padding: 8px;
+    padding: 5px;
     border-radius: 10px;
     color: #2F4F4F;
 	font-weight:bold;
@@ -332,13 +332,24 @@ button .ui
     font-weight: bold;
 	text-decoration:none;
 }
-.comment
+.cmt_btn
 {
 
     background-color: #efefef;
-    padding: 8px;
+    padding: 5px;
     border-radius: 10px;
 	margin-left: 20px;
+	color: #2F4F4F;
+	font-weight:bold;
+}
+
+.like-btn
+{
+
+    background-color: #efefef;
+    padding: 5px;
+    border-radius: 10px;
+	margin-left: 25px;
 	color: #2F4F4F;
 	font-weight:bold;
 }
@@ -425,5 +436,23 @@ button .ui
 {
 	height:80px;
 	width:90px;
+}
+.ui .thirteen
+{
+	padding-left: 10%;
+}
+.ui .shower
+{
+	padding-left: 10%;
+}
+.shower .item
+{
+	font-size: 16px;
+	font-weight: bold;
+}
+.item .label
+{
+	font-size: 14px;
+	font-weight: bold;
 }
 /* Notifications */

@@ -31,6 +31,18 @@ class ProfileManager(models.Manager):
         return profiles
 
 
+    def my_network(self, me):
+        profiles = Profile.objects.all().exclude(user=me)
+        profile = Profile.objects.get(user=me)
+        query = Relationship.objects.filter(Q(sender=profile) | Q(receiver=profile))
+
+        accepted = set([])
+        for rel in query:
+            if rel.status == 'accepted':
+                accepted.add(rel.receiver)
+                accepted.add(rel.sender)
+        return accepted
+
 class Profile(models.Model):
     user = models.OneToOneField('SoftWord.Logins', on_delete=models.CASCADE)
     profile_photo = models.ImageField(upload_to='images/', default='images/defaultUser.png',

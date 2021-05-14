@@ -17,16 +17,16 @@ def profile(request):
     profile = Profile.objects.get(user=request.user)
     u_form = UserUpdateForm(request.POST, instance=request.user)
     p_form = ProfileUpdateForm(request.POST or None, request.FILES or None, instance=profile)
-    confirm =  False
     if request.method == 'POST':
 
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            confirm = True
+            
             # Get the current instance object to display in the template
             
             return redirect('profile')
+       
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=profile)
@@ -54,7 +54,9 @@ def invites_received(request):
 
     context = {
         'query':results,
-        'is_empty': is_empty
+        'is_empty': is_empty,
+        'profile': Profile.objects.get(user=request.user) 
+        
     }
     return render(request, 'myInvites.html', context)
     
@@ -87,14 +89,15 @@ def reject_invitation(request):
 
 
 @login_required
-def invites_profiles_list(request):
+def network_profiles_list(request):
     user = request.user
-    query = Profile.objects.get_all_profiles_to_invite(user)
+    query = Profile.objects.my_network(user)
 
     context = {
-        'query':query
+        'query':query,
+        'profile': Profile.objects.get(user=request.user) 
     }
-    return render(request, 'toInvite_listProfiles.html', context)
+    return render(request, 'myNetwork.html', context)
 
 
 
@@ -104,10 +107,10 @@ def profiles_list(request):
     query = Profile.objects.get_all_profiles(user)
 
     context = {
-        'query':query
+        'query':query,
+        'profile': Profile.objects.get(user=request.user) 
     }
     return render(request, 'listProfiles.html', context)
-
 
 
 class ProfileDetailView(DetailView):
@@ -148,7 +151,7 @@ class ProfileListView(ListView):
     context_object_name = 'query'
 
     def get_queryset(self):
-        query = Profile.objects.get_all_profiles(self.request.user)
+        query = Profile.objects.get_all_profiles_to_invite(self.request.user)
         return query
         
     def get_context_data(self, **kwargs):
@@ -177,14 +180,14 @@ class ProfileListView(ListView):
 
 @login_required
 def send_invitations(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         pk = request.POST.get('profile_pk')
         user = request.user
         sender = Profile.objects.get(user=user)
         receiver = Profile.objects.get(pk=pk)
 
         rel = Relationship.objects.create(sender=sender, receiver=receiver, status='send')
-        rel.save()
+        
         return redirect(request.META.get('HTTP_REFERER'))
     return redirect('profile')
 

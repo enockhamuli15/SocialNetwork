@@ -1,0 +1,33 @@
+{% extends 'base_apps.html' %}
+
+{% block title %}
+    Invite network
+{% endblock title %}
+
+{% block content %}
+    <br><br>
+
+        {% for item in query %}
+        <div class="three wide column" >
+            <img class=" rounded-circle article-img" src="{{ item.profile_photo.url }}" alt="" >
+        </div>
+        <div class="thirteen wide column">
+            <h6>{{item.user}}</h6>
+            <h6>{{item.description}}</h6>
+            <a href="{{item.get_absolute_url}}">
+                <button class="btn btn-primary view-profile " style="margin-bottom: 5px;">View profile</button>
+            </a>
+            {% if request.user in item.friends.all %}
+                <form action="{% url 'remove_friends' %}" method="POST">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="profile_pk" value="{{item.pk}}">
+                    
+                        <button type="submit" class="btn btn-outline-danger view-profile"><i class="minus square icon"></i>Remove</button>
+                </form>
+            {% endif %}  
+        </div>
+        <hr>
+        {% endfor %}
+
+{% endblock content %}

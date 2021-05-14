@@ -32,7 +32,8 @@ class Posts(models.Model):
     def __str__(self):
         return str(self.description)
 
-    
+    class Meta:
+        ordering = ('-createdTime',)
 
     @property
     def num_likes(self):

@@ -156,7 +156,7 @@
 					<div class="feature-box">
 
 						<div class="feature-details">
-							<a href="#">Network</a>
+							<a href="{% url 'invites_profiles' %}"> My Network</a>
 								<p>You're connected with <h2>{{profile.get_friends_no}}</h2> geeks</p>
 								<div>
 									<span><a href="{%url 'all_profiles' %}" style="color:#2d557d;margin-right: 5px;">View all profiles</a></span>
@@ -197,7 +197,7 @@
 				<h4>My posts and related</h4>
 					{% if len_posts %}
 						{% for post in posts %}
-							<div class="ui segment">
+							<div class="posts">
 								{{post.description}}
 							</div>
 
@@ -206,6 +206,7 @@
 							<div class="messages">No posts for this user</div>
 							<br>
 					{% endif %}
+					
 			</div> 
 		</div>
     </div>
